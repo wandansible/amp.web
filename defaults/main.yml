@@ -1,0 +1,32 @@
+---
+# Initial superuser account details for amp website:
+ampweb_username: "admin"
+ampweb_password: "admin"
+
+# /etc/ampweb/ampweb.conf template variables:
+ampweb_webroot: "/"
+ampweb_extra_directories: []
+
+# /etc/ampweb/production.ini template variables:
+ampweb_showtos: "no"
+ampweb_publicdata: "yes"
+ampweb_nntschost: "localhost"
+ampweb_nntscport: 61234
+ampweb_disableevents: "no"
+ampweb_hidedashgraphs: "no"
+ampweb_projecttitle: "Active Measurement Project"
+ampweb_showdash: "yes"
+ampweb_showmatrix: "yes"
+ampweb_collections: "amp-icmp, amp-http, amp-traceroute, amp-dns, amp-tcpping"
+ampweb_matrixtabs: "latency,loss,hops,http"
+ampweb_matrixperiod_http: 7200
+ampweb_matrixperiod_latency: 600
+ampweb_matrixperiod_tput: 7200
+ampweb_matrixperiod_hops: 600
+ampweb_minbin_traceroute: 600
+ampweb_minbin_latency: 120
+ampweb_minbin_http: 900
+ampweb_minbin_throughput: 300
+
+# /etc/apache2/conf-available/ampweb.conf template variables:
+ampweb_wsgi_threads: 4
