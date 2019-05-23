@@ -35,3 +35,4 @@
     dest: "/etc/apache2/mods-available/{{ item | basename }}"
   with_fileglob:
     - "templates/apache/mods-available/*"
+  notify: reload apache
