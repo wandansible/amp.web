@@ -12,7 +12,7 @@
     question: ampy/views_user
     value: "{{ ampweb_username }}"
     vtype: string
-  when: "'missing' in check_ampweb_password_set.stdout"
+  when: "'stdout' in check_ampweb_password_set and 'missing' in check_ampweb_password_set.stdout"
 
 - name: Set initial amp website password
   debconf:
@@ -20,7 +20,7 @@
     question: ampy/views_password
     value: "{{ ampweb_password }}"
     vtype: password
-  when: "'missing' in check_ampweb_password_set.stdout"
+  when: "'stdout' in check_ampweb_password_set and 'missing' in check_ampweb_password_set.stdout"
 
 - name: Install AMP server packages
   apt:
