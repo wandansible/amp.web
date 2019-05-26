@@ -29,6 +29,25 @@
     - "templates/apache/sites-available/*"
   notify: reload apache
 
+- name: Add additional apache configuration
+  template:
+    src: "{{ item }}"
+    dest: "/etc/apache2/conf-available/{{ item | basename }}"
+  with_fileglob:
+    - "templates/apache/conf-available/*"
+  notify: reload apache
+
+- name: Activate additional apache configuration
+  file:
+    src: "/etc/apache2/conf-available/{{ item | basename }}"
+    dest: "/etc/apache2/conf-enabled/{{ item | basename }}"
+    owner: root
+    group: root
+    state: link
+  with_fileglob:
+    - "templates/apache/conf-available/*"
+  notify: reload apache
+
 - name: Configure apache modules
   template:
     src: "{{ item }}"
