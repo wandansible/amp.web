@@ -1,5 +1,5 @@
 ---
 
-- include: apt.yml
-- include: ampweb.yml
-- include: apache.yml
+- import_tasks: apt.yml
+- import_tasks: ampweb.yml
+- import_tasks: apache.yml
