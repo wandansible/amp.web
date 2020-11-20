@@ -1,8 +1,9 @@
 ---
 
 - name: Check if superuser credentials exist for amp website
-  shell: >
-    echo "get ampy/views_password" | debconf-communicate >/dev/null || echo "missing"
+  shell:
+    cmd: >
+      echo "get ampy/views_password" | debconf-communicate >/dev/null || echo "missing"
   register: check_ampweb_password_set
   changed_when: "'missing' in check_ampweb_password_set.stdout"
 
