@@ -1,14 +1,14 @@
 ---
 
 - name: Check if superuser credentials exist for amp website
-  shell:
+  ansible.builtin.shell:
     cmd: >
       echo "get ampy/views_password" | debconf-communicate >/dev/null || echo "missing"
   register: check_ampweb_password_set
   changed_when: "'missing' in check_ampweb_password_set.stdout"
 
 - name: Set initial amp website username
-  debconf:
+  ansible.builtin.debconf:
     name: ampy
     question: ampy/views_user
     value: "{{ ampweb_username }}"
@@ -18,7 +18,7 @@
     - "'missing' in check_ampweb_password_set.stdout"
 
 - name: Set initial amp website password
-  debconf:
+  ansible.builtin.debconf:
     name: ampy
     question: ampy/views_password
     value: "{{ ampweb_password }}"
@@ -28,7 +28,7 @@
     - "'missing' in check_ampweb_password_set.stdout"
 
 - name: Install AMP server packages
-  apt:
+  ansible.builtin.apt:
     pkg:
       - amp-web
     state: present
@@ -36,14 +36,20 @@
 
 # Apache configuration for ampweb
 - name: Configure /etc/ampweb/ampweb.conf
-  template:
+  ansible.builtin.template:
     src: "templates/ampweb/ampweb.conf"
     dest: "/etc/ampweb/ampweb.conf"
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
   notify: reload apache
 
 # ampweb graphing and data endpoint configuration
 - name: Configure /etc/ampweb/production.ini
-  template:
+  ansible.builtin.template:
     src: "templates/ampweb/production.ini"
     dest: "/etc/ampweb/production.ini"
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
   notify: reload apache

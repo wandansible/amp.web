@@ -1,5 +1,5 @@
 ---
 
-- import_tasks: apt.yml
-- import_tasks: ampweb.yml
-- import_tasks: apache.yml
+- ansible.builtin.import_tasks: apt.yml
+- ansible.builtin.import_tasks: ampweb.yml
+- ansible.builtin.import_tasks: apache.yml

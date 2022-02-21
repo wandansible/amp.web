@@ -1,7 +1,7 @@
 ---
 
 - name: Enable apache modules
-  apache2_module:
+  community.general.apache2_module:
     name: "{{ item }}"
     state: present
   loop:
@@ -11,15 +11,18 @@
   notify: restart apache
 
 - name: Configure apache vhosts
-  template:
+  ansible.builtin.template:
     src: "{{ item }}"
     dest: "/etc/apache2/sites-available/{{ item | basename }}"
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
   with_fileglob:
     - "templates/apache/sites-available/*"
   notify: reload apache
 
 - name: Activate apache vhosts
-  file:
+  ansible.builtin.file:
     src: "/etc/apache2/sites-available/{{ item | basename }}"
     dest: "/etc/apache2/sites-enabled/{{ item | basename }}"
     owner: root
@@ -30,15 +33,18 @@
   notify: reload apache
 
 - name: Add additional apache configuration
-  template:
+  ansible.builtin.template:
     src: "{{ item }}"
     dest: "/etc/apache2/conf-available/{{ item | basename }}"
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
   with_fileglob:
     - "templates/apache/conf-available/*"
   notify: reload apache
 
 - name: Activate additional apache configuration
-  file:
+  ansible.builtin.file:
     src: "/etc/apache2/conf-available/{{ item | basename }}"
     dest: "/etc/apache2/conf-enabled/{{ item | basename }}"
     owner: root
@@ -49,9 +55,12 @@
   notify: reload apache
 
 - name: Configure apache modules
-  template:
+  ansible.builtin.template:
     src: "{{ item }}"
     dest: "/etc/apache2/mods-available/{{ item | basename }}"
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
   with_fileglob:
     - "templates/apache/mods-available/*"
   notify: reload apache
