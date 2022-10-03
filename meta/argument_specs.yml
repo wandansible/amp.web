@@ -1,0 +1,185 @@
+---
+argument_specs:
+  main:
+    short_description: Install and configure amp-web
+    options:
+      ampweb_username:
+        description: Username for the superuser
+        type: str
+        default: admin
+
+      ampweb_password:
+        description: Password for the superuser
+        type: str
+        default: admin
+
+      ampweb_webroot:
+        description: Root URL path for the website
+        type: str
+        default: /
+
+      ampweb_extra_directories:
+        description: List of directory aliases to serve from the web server
+        type: list
+        elements: dict
+        options:
+          alias:
+            description: URL path
+            type: str
+            required: true
+          path:
+            description: Path to the directory on filesystem
+            type: str
+            required: true
+          options:
+            description: Apache options for the directory
+            type: list
+            elements: str
+            required: true
+
+      ampweb_showtos:
+        description: |
+          If "yes", users must agree to the terms of service
+          when they log in to the website
+        type: str
+        default: "no"
+        choices:
+          - "no"
+          - "yes"
+
+      ampweb_publicdata:
+        description: If "yes", make data available to users not logged in
+        type: str
+        default: "yes"
+        choices:
+          - "no"
+          - "yes"
+
+      ampweb_nntschost:
+        description: Hostname for NNTSC server
+        type: str
+        default: localhost
+
+      ampweb_nntscport:
+        description: Port for NNTSC server
+        type: int
+        default: 61234
+
+      ampweb_disableevents:
+        description: If "yes", disable the netevmon dashboard
+        type: str
+        default: "no"
+        choices:
+          - "no"
+          - "yes"
+
+      ampweb_hidedashgraphs:
+        description: |
+          If "yes", remove the event frequency graphs and the table of
+          most frequent events from the dashboard
+        type: str
+        default: "no"
+        choices:
+          - "no"
+          - "yes"
+
+      ampweb_projecttitle:
+        description: Title to appear in the large banner at the top of every page
+        type: str
+        default: Active Measurement Project
+
+      ampweb_showdash:
+        description: If "yes", a link to the event dashboard will appear at the top of every page
+        type: str
+        default: "yes"
+        choices:
+          - "no"
+          - "yes"
+
+      ampweb_showmatrix:
+        description: If "yes", a link to the matrix will appear at the top of every page
+        type: str
+        default: "yes"
+        choices:
+          - "no"
+          - "yes"
+
+      ampweb_collections:
+        description: |
+          Space-separated list of collections to appear on the graph browser page.
+          Specifiying an empty string will result in all collections being displayed.
+        type: str
+        default: amp-icmp, amp-http, amp-traceroute, amp-dns, amp-tcpping
+
+      ampweb_matrixtabs:
+        description: Space-separated list of tabs to appear on the matrix page
+        type: str
+        default: latency,loss,hops,http
+
+      ampweb_matrixperiod_http:
+        description: Time period in seconds covered by the HTTP matrix
+        type: int
+        default: 7200
+
+      ampweb_matrixperiod_latency:
+        description: Time period in seconds covered by the ICMP latency matrix
+        type: int
+        default: 600
+
+      ampweb_matrixperiod_tput:
+        description: Time period in seconds covered by the throughput matrix
+        type: int
+        default: 7200
+
+      ampweb_matrixperiod_hops:
+        description: Time period in seconds covered by the hops matrix
+        type: int
+        default: 600
+
+      ampweb_minbin_traceroute:
+        description: Minimum binsize in seconds for aggregating traceroute graph data
+        type: int
+        default: 600
+
+      ampweb_minbin_latency:
+        description: Minimum binsize in seconds for aggregating latency graph data
+        type: int
+        default: 120
+
+      ampweb_minbin_http:
+        description: Minimum binsize in seconds for aggregating HTTP graph data
+        type: int
+        default: 900
+
+      ampweb_minbin_throughput:
+        description: Minimum binsize in seconds for aggregating throughput graph data
+        type: int
+        default: 300
+
+      ampweb_wsgi_threads:
+        description: Number of threads created to handle requests for the AMP web WSGI process
+        type: int
+        default: 4
+
+      ampweb_acl_networks:
+        description: List of networks to restrict web access to
+        type: list
+        elements: str
+
+      ampname:
+        description: Domain name of the amp web server
+        type: str
+        required: true
+
+      mailto:
+        description: Email address for server admin
+        type: str
+        required: true
+
+      amp_apt_key_fingerprint:
+        description: Fingerprint for amp apt signing key
+        type: str
+
+      bintray_amp_apt_key_fingerprint:
+        description: Fingerprint for apt signing key for old bintray amp repo
+        type: str
