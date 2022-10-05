@@ -88,6 +88,12 @@ argument_specs:
         type: str
         default: Active Measurement Project
 
+      ampweb_secret:
+        description: |
+          Authentication secret, should be set to a unique random string.
+        type: str
+        required: true
+
       ampweb_showdash:
         description: If "yes", a link to the event dashboard will appear at the top of every page
         type: str
