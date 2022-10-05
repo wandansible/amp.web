@@ -1,0 +1,11 @@
+---
+- name: Converge
+  hosts: all
+  tasks:
+    - name: "Include wandansible.amp.web"
+      ansible.builtin.include_role:
+        name: "wandansible.amp.web"
+      vars:
+        mailto: "sysadmin@example.org"
+        ampname: "amp.example.org"
+        ampweb_secret: "secret"

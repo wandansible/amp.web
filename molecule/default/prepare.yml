@@ -1,0 +1,36 @@
+---
+- name: Prepare
+  hosts: all
+  tasks:
+    - name: "Install ssl-cert"
+      ansible.builtin.apt:
+        pkg:
+          - "ssl-cert"
+
+    - name: "Create SSL directory"
+      ansible.builtin.file:
+        path: "/etc/letsencrypt/live/amp.example.org/"
+        state: "directory"
+        mode: "u=rwx,g=,o="
+
+    - name: "Copy snakeoil certificate"
+      ansible.builtin.copy:
+        src: "/etc/ssl/certs/ssl-cert-snakeoil.pem"
+        dest: "/etc/letsencrypt/live/amp.example.org/fullchain.pem"
+        owner: "root"
+        group: "root"
+        mode: "u=rw,g=r,o=r"
+        remote_src: true
+
+    - name: "Copy snakeoil key"
+      ansible.builtin.copy:
+        src: "/etc/ssl/private/ssl-cert-snakeoil.key"
+        dest: "/etc/letsencrypt/live/amp.example.org/privkey.pem"
+        owner: "root"
+        group: "root"
+        mode: "u=rw,g=,o="
+        remote_src: true
+
+    - name: "Install postgresql"
+      ansible.builtin.include_role:
+        name: "geerlingguy.postgresql"
